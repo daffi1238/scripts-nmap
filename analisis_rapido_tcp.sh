@@ -3,19 +3,17 @@
 #2. Analiza dicho fichero y sonsaca en los correspondientes array's la información de puerto, protocolo y estado
 #3. Tras obtener esto aplica a los distintos puertos análisis profundos según la condición
 
-nmap -sS 127.0.0.1 -oN /tmp/nmap_tcp.txt
-nmap -sU 127.0.0.1 -oN /tmp/nmap_udp.txt
-puertos_udp=0
-estado_udp=0
+ip_addr="127.0.0.1"
+nmap -sS $ip_addr -p- -oN /tmp/nmap_tcp.txt
+#nmap -sU 127.0.0.1 -oN /tmp/nmap_udp.txt
+
 
 #variables que queremos que sobrevivan
 puertos=0
 estado=0
 
 
-
 IFS=$'\n' read -d '' -r -a lines < /tmp/nmap_tcp.txt
-IFS_udp=$'\n' read -d '' -r -a lines_udp < /tmp/nmap_tcp.txt
 
 printf "${lines[4]}"
 
@@ -71,5 +69,7 @@ mostrar_puerto_estado $puertos $estado
 #El siguiente paso es proponer los distintos análisis según protocolo y estado
 #tcp abierto
 #tcp filtrado
-#udp abierto
-#udp cerrado
+
+
+source ./src/deep_scanTCP.sh
+deep_scapTCP $ip_addr $puertos
