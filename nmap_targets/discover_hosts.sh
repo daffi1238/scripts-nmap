@@ -1,4 +1,4 @@
-#nmap -sP 192.168.0.* -oN /tmp/nmap_discover.txt
+nmap -sP 192.168.0.* -oN /tmp/nmap_discover.txt
 
 IFS=$'\n' read -d '' -r -a lines < /tmp/nmap_discover.txt
 
